@@ -19,6 +19,7 @@ test_steps: &test_steps
 jobs:
   test_linux:
     docker:
+      - image: circleci/golang:1.11
       - image: circleci/golang:1.12
     working_directory: /go/src/github.com/kumatch/example-go-multios-ci
     steps: *test_steps
