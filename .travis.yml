@@ -1,9 +1,13 @@
 language: go
 go:
+  - 1.11.x
   - 1.12.x
 os:
   - linux
   - osx
   - windows
+env:
+  global:
+  - GO111MODULE=on
 script:
   - go test .
