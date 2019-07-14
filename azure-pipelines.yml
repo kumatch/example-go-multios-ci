@@ -24,3 +24,31 @@ jobs:
         GO111MODULE: "on"
   steps:
     - template: azure-test-steps.yml
+
+- job: Windows
+  pool:
+    vmImage: "vs2017-win2016"
+  strategy:
+    matrix:
+      go_1.11:
+        go_version: "1.11.7"
+        GO111MODULE: "on"
+      go_1.12:
+        go_version: "1.12"
+        GO111MODULE: "on"
+  steps:
+    - template: azure-test-steps.yml
+
+- job: macOS
+  pool:
+    vmImage: "macOS-10.13"
+  strategy:
+    matrix:
+      go_1.11:
+        go_version: "1.11.7"
+        GO111MODULE: "on"
+      go_1.12:
+        go_version: "1.12"
+        GO111MODULE: "on"
+  steps:
+    - template: azure-test-steps.yml
