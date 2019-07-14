@@ -3,34 +3,42 @@
 # Add steps that test, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/go
 
-trigger:
-- master
-
-pool:
-  vmImage: 'ubuntu-latest'
-
 variables:
   GOBIN:  '$(GOPATH)/bin' # Go binaries path
   GOROOT: '/usr/local/go1.11' # Go installation path
   GOPATH: '$(system.defaultWorkingDirectory)/gopath' # Go workspace path
   modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)' # Path to the module's code
-  GO111MODULE: 'ON'
-
-steps:
-- script: |
-    mkdir -p '$(GOBIN)'
-    mkdir -p '$(GOPATH)/pkg'
-    mkdir -p '$(modulePath)'
-    shopt -s extglob
-    shopt -s dotglob
-    mv !(gopath) '$(modulePath)'
-    echo '##vso[task.prependpath]$(GOBIN)'
-    echo '##vso[task.prependpath]$(GOROOT)/bin'
-  displayName: 'Set up the Go workspace'
-
-- script: |
-    go version
-    go test .
-    #go build -v .
-  workingDirectory: '$(modulePath)'
-  displayName: 'Get dependencies, then test'
+  GO111MODULE: 'on'
+  
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-latest'
+  strategy:
+    matrix:
+      go_1.11:
+        go_version: "1.11"
+        GO111MODULE: "on"
+      go_1.12:
+        go_version: "1.12"
+        GO111MODULE: "on"
+  steps:
+  - task: GoTool@0
+    inputs:
+      version: $(go_version)
+  - script: |
+      mkdir -p '$(GOBIN)'
+      mkdir -p '$(GOPATH)/pkg'
+      mkdir -p '$(modulePath)'
+      shopt -s extglob
+      shopt -s dotglob
+      mv !(gopath) '$(modulePath)'
+      echo '##vso[task.prependpath]$(GOBIN)'
+      echo '##vso[task.prependpath]$(GOROOT)/bin'
+    displayName: 'Set up the Go workspace'
+  - script: |
+      go version
+      go test .
+      #go build -v .
+    workingDirectory: '$(modulePath)'
+    displayName: 'Get dependencies, then test'
