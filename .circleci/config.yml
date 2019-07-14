@@ -1,0 +1,35 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+
+test_steps: &test_steps
+  - checkout
+  - restore_cache:
+      keys:
+        - go-mod-v1-{{ checksum "go.sum" }}
+  - run: go test -v ./...
+  - save_cache:
+      key: go-mod-v1-{{ checksum "go.sum" }}
+      paths:
+        - "/go/pkg/mod"
+
+jobs:
+  test_linux:
+    docker:
+      - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/kumatch/example-go-multios-ci
+    steps: *test_steps
+
+  # fail because macos container is not contain a golang.
+  test_macos:
+    macos:
+      xcode: "10.2.1"
+    steps: *test_steps
+
+workflows:
+  version: 2
+  build_test:
+    jobs:
+    - test_linux
+    - test_macos
