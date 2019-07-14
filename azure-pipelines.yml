@@ -17,28 +17,10 @@ jobs:
   strategy:
     matrix:
       go_1.11:
-        go_version: "1.11"
+        go_version: "1.11.7"
         GO111MODULE: "on"
       go_1.12:
         go_version: "1.12"
         GO111MODULE: "on"
   steps:
-  - task: GoTool@0
-    inputs:
-      version: $(go_version)
-  - script: |
-      mkdir -p '$(GOBIN)'
-      mkdir -p '$(GOPATH)/pkg'
-      mkdir -p '$(modulePath)'
-      shopt -s extglob
-      shopt -s dotglob
-      mv !(gopath) '$(modulePath)'
-      echo '##vso[task.prependpath]$(GOBIN)'
-      echo '##vso[task.prependpath]$(GOROOT)/bin'
-    displayName: 'Set up the Go workspace'
-  - script: |
-      go version
-      go test .
-      #go build -v .
-    workingDirectory: '$(modulePath)'
-    displayName: 'Get dependencies, then test'
+    - template: azure-test-steps.yml
