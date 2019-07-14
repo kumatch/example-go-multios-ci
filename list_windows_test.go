@@ -9,12 +9,9 @@ func TestOutputFiles(t *testing.T) {
 		return
 	}
 
-	expects := `a.txt
-b.txt
-c.txt`
+	expects := "a.txt\r\nb.txt\r\n\r\nc.txt\r\nd.txt" // failed
 
 	if expects != out {
-		t.Errorf("want: %s\ngot: %s", expects, out)
+		t.Errorf("want: %s\r\ngot: %s", expects, out)
 	}
 }
-
