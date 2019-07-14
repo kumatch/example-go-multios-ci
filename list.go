@@ -15,4 +15,3 @@ func outputFiles(dir string) (string, error) {
 
 	return strings.TrimSpace(string(out)), nil
 }
-

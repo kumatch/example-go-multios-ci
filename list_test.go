@@ -21,4 +21,3 @@ c.txt`
 		t.Errorf("want: %s\ngot: %s", expects, out)
 	}
 }
-
