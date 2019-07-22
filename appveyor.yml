@@ -1,0 +1,18 @@
+version: "{build}"
+
+os: Visual Studio 2017
+
+build: off
+
+clone_folder: c:\gopath\src\github.com\kumatch\example-go-multios-ci
+
+environment:
+  GOPATH: c:\gopath
+  GO111MODULE: on
+
+stack: go 1.12
+
+test_script:
+  - go test -v ./...
+
+deploy: off
