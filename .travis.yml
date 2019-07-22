@@ -10,4 +10,4 @@ env:
   global:
   - GO111MODULE=on
 script:
-  - go test .
+  - go test -v ./...
