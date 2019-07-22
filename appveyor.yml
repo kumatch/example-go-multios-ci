@@ -10,7 +10,13 @@ environment:
   GOPATH: c:\gopath
   GO111MODULE: on
 
-stack: go 1.12
+environment:
+  GOPATH: c:\gopath
+  matrix:
+  - GOVERSION: 1.11
+    GOROOT: C:\go111
+  - GOVERSION: 1.12
+    GOROOT: C:\go112
 
 test_script:
   - go test -v ./...
