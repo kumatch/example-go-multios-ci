@@ -9,9 +9,6 @@ clone_folder: c:\gopath\src\github.com\kumatch\example-go-multios-ci
 environment:
   GOPATH: c:\gopath
   GO111MODULE: on
-
-environment:
-  GOPATH: c:\gopath
   matrix:
   - GOVERSION: 1.11
     GOROOT: C:\go111
