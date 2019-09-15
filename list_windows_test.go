@@ -9,7 +9,7 @@ func TestOutputFilesOnWindows(t *testing.T) {
 		return
 	}
 
-	expects := "a.txt\r\nb.txt\r\nd.txt"
+	expects := "a.txt\r\nb.txt\r\nc.txt"
 
 	if expects != out {
 		t.Errorf("want: %s\r\ngot: %s", expects, out)
